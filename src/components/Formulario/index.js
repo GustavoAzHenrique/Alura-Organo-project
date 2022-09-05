@@ -1,41 +1,34 @@
 import { useState } from "react";
-import Botao from "../Botão";
+import Botao from "../Botao";
 import CampoTexto from "../CampoTexto";
 import ListaSuspensa from "../ListaSuspensa";
-
 import "./Formulario.css";
 
 const Formulario = (props) => {
-	//#Hooks
 	const [nome, setNome] = useState("");
 	const [cargo, setCargo] = useState("");
 	const [imagem, setImagem] = useState("");
 	const [time, setTime] = useState("");
 
-	// Lista de times
-	const times = [
-		"Programação",
-		"Front-End",
-		"Data Science",
-		"DevOps",
-		"Ux e Design",
-		"Mobile",
-		"Inovação e Gestão",
-	];
-
 	const aoSalvar = (evento) => {
-		//controlar reload automático do react
 		evento.preventDefault();
-		props.aoColaboradorCadastrado({ nome, cargo, imagem, time });
+		props.aoColaboradorCadastrado({
+			nome,
+			cargo,
+			imagem,
+			time,
+		});
+		setNome("");
+		setCargo("");
+		setImagem("");
+		setTime("");
 	};
 
 	return (
 		<section className="formulario">
-			{/*  função fica dentro do form e não no botão para que haja uma validação do form */}
 			<form onSubmit={aoSalvar}>
-				<h2>Preencha os dados para criar um card personalizado</h2>
+				<h2>Preencha os dados para criar o card do colaborador</h2>
 				<CampoTexto
-					// validação html CampoTexto
 					required={true}
 					label="Nome"
 					placeholder="Digite seu nome"
@@ -50,14 +43,16 @@ const Formulario = (props) => {
 					aoAlterado={(valor) => setCargo(valor)}
 				/>
 				<CampoTexto
+					required={true}
 					label="Imagem"
 					placeholder="Digite o endereço da imagem"
 					valor={imagem}
 					aoAlterado={(valor) => setImagem(valor)}
 				/>
 				<ListaSuspensa
+					required={true}
 					label="Time"
-					itens={times}
+					itens={props.times}
 					valor={time}
 					aoAlterado={(valor) => setTime(valor)}
 				/>
